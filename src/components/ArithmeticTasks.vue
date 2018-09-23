@@ -104,7 +104,7 @@
                 difficulty: {{ difficulty }}
                 Answer: {{ correctAnswer }}
             </div>
-            <div class="col-lg-12 text-center" v-show="false">
+            <div class="col-lg-12 text-center" v-show="true">
                 <div>Scann denne QR-koden med mobil for link til denne nettsiden.</div>
                 <a href="https://teachmachine014.firebaseapp.com">
                     <img src="../assets/qr-link.png" alt="QR-kode, link til siden">
