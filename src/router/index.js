@@ -13,9 +13,14 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
-      path: '/arithmetic',
+      path: '/',
       name: 'ArithmeticTasks',
       component: ArithmeticTasks
+    },
+    {
+        path: '/arithmetic',
+        name: 'ArithmeticTasks',
+        component: ArithmeticTasks
     },
     {
       path: '/nynorsk',
@@ -27,11 +32,11 @@ export default new Router({
         name: 'NynorskTasksTall',
         component: NynorskTasksNumbersOrderBySize
     },
-    {
+    /*{
       path: '/',
       name: 'Home',
       component: Home
-    }
+    }*/
 
   ]
 })

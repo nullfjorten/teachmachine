@@ -1,6 +1,6 @@
 # teachmachine
 
-> A Vue.js project
+> A project written to explore Vue.js. Currently Norwegian only, this is a system for solving simple math and practicing doing calculations. Feel free to contribute.
 
 ## Build Setup
 
