@@ -293,7 +293,13 @@ export default {
             this.alertInfo = true;
         },
         getRandomInt (min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
+            let a = Math.floor(Math.random() * (max - min + 1)) + min;
+            if (a == 0) { // Should hopefully lower probability of rolling zero
+                if (Math.random() > 0.5) {
+                    a = this.getRandomInt(min, max); // Do reroll
+                }
+            }
+            return a;
         },
         setRandomIntAB (arrMinMaxA, arrMinMaxB = null) {
             if (!Array.isArray(arrMinMaxB)) {
