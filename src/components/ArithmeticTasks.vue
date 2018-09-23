@@ -22,7 +22,7 @@
                             </div>
                         </div>
 
-                        <div class="alert alert-warning">
+                        <div class="alert alert-warning" v-show="false">
                             <div class="row">
                                 <div class="col-12">
                                     {{ assessment }}&nbsp;
@@ -73,14 +73,15 @@
                                 </div>
                                 <div v-if="b == 0" class="flex-column digitbox">0</div>
                             </div>
+                        </div>
+                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
+                                    <hr>
                                     Antall riktige: {{ numCorrectAnswers }}
+                                    <hr>
                                 </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6 alert alert-warning">
                                     <button class="btn btn-link btn-change btn-operator" :class="[operator == '+' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('+')"><i class="fa fa-plus"></i></button>
@@ -105,7 +106,7 @@
                 Answer: {{ correctAnswer }}
             </div>
             <div class="col-lg-12 text-center" v-show="true">
-                <div>Scann denne QR-koden med mobil for link til denne nettsiden.</div>
+                <div>Skann denne QR-koden med mobilen for å få lenke til dette nettstedet.</div>
                 <a href="https://teachmachine014.firebaseapp.com">
                     <img src="../assets/qr-link.png" alt="QR-kode, link til siden">
                 </a>
@@ -315,6 +316,20 @@ export default {
 
 
 <style scoped>
+    .color-primary-0 { color: #AF4A0B }	/* Main Primary color */
+    .color-primary-1 { color: #E38348 }
+    .color-primary-2 { color: #D4621C }
+    .color-primary-3 { color: #913700 }
+    .color-primary-4 { color: #6B2900 }
+
+
+    .main-panel-success {
+        background-color: #6B2900;
+    }
+    .main-panel-fail {
+        background-color: #6B2900;
+    }
+
     li { list-style-type: none; }
     .digitbox {
         width: 22px;
