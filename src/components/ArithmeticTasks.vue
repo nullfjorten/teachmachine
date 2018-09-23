@@ -106,10 +106,15 @@
                 Answer: {{ correctAnswer }}
             </div>
             <div class="col-lg-12 text-center" v-show="true">
-                <div>Skann denne QR-koden med mobilen for å få lenke til dette nettstedet.</div>
-                <a href="https://teachmachine014.firebaseapp.com">
-                    <img src="../assets/qr-link.png" alt="QR-kode, link til siden">
-                </a>
+                <div>Skann denne QR-koden med mobilen for å få lenken til nettstedet.</div>
+                <div>
+                    <a href="https://teachmachine014.firebaseapp.com">
+                        <img src="../assets/qr-link.png" alt="QR-kode, link til siden">
+                    </a>
+                </div>
+                <div>
+                    <a href="https://github.com/nullfjorten/teachmachine" target="_blank">Klikk her for prosjektets kildekode.</a>
+                </div>
             </div>
         </div>
     </div>
