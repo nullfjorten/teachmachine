@@ -15,10 +15,10 @@
 
                         <div class="row">
                             <div class="col-md-8">
-                                <input type="text" v-model="answer" ref="txtAnswer" @keypress.enter="enterPressed" class="form-control mb-3" pattern="\d*" placeholder="Skriv svaret her">
+                                <input type="text" v-model="answer" ref="txtAnswer" @keypress.enter="enterPressed" class="form-control mb-3" pattern="\d*" placeholder="">
                             </div>
                             <div class="col-md-4">
-                                <button @click.prevent="generateProblem" class="btn btn-block btn-primary">Ny utfordring!</button>
+                                <button @click.prevent="generateProblem" class="btn btn-block btn-primary">OK</button>
                             </div>
                         </div>
 
@@ -76,10 +76,8 @@
                         </div>
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-12">
-                                    <hr>
-                                    Antall riktige: {{ numCorrectAnswers }}
-                                    <hr>
+                                <div class="col-12 alert alert-warning">
+                                    Antall riktige svar: {{ numCorrectAnswers }}
                                 </div>
                             </div>
                             <div class="row">
@@ -90,9 +88,9 @@
                                     <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('/')"><i class="fa fa-divide"></i></button>
                                 </div>
                                 <div class="col-md-6 alert alert-warning">
-                                    <button class="btn btn-link btn-change" :class="[difficulty == '1' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('1')">Lett</button>
-                                    <button class="btn btn-link btn-change" :class="[difficulty == '2' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('2')">Middels</button>
-                                    <button class="btn btn-link btn-change" :class="[difficulty == '3' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('3')">Vanskelig</button>
+                                    <button class="btn btn-link btn-change" :class="[difficulty == '1' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('1')">Lett / easy</button>
+                                    <button class="btn btn-link btn-change" :class="[difficulty == '2' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('2')">Middels / medium</button>
+                                    <button class="btn btn-link btn-change" :class="[difficulty == '3' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('3')">Vanskelig / hard</button>
                                 </div>
                             </div>
                         </div>
@@ -131,10 +129,10 @@ export default {
     data () {
         return {
             problemTypes: [
-                { 'operator': '+', 'heading': 'Addisjon (pluss)' },
-                { 'operator': '-', 'heading': 'Subraksjon (minus)' },
-                { 'operator': '*', 'heading': 'Multiplikasjon (gange)' },
-                { 'operator': '/', 'heading': 'Divisjon (dele)' }
+                { 'operator': '+', 'heading': '+ Addisjon (pluss)' },
+                { 'operator': '-', 'heading': '- Subraksjon (minus)' },
+                { 'operator': '*', 'heading': '* Multiplikasjon (gange)' },
+                { 'operator': '/', 'heading': '/ Divisjon (dele)' }
             ],
             activeProblemTypeIndex: 0, // 0-4
             difficulty: '1', // '1'-'3'
@@ -327,12 +325,34 @@ export default {
     .color-primary-3 { color: #913700 }
     .color-primary-4 { color: #6B2900 }
 
+    .btn-operator {
+        /*background-color: */
+    }
+    .alert-warning {
+        background-color: #E38348;
+        border-color: #913700;
+        color: #6B2900;
+        font-size: 138%;
+        text-shadow: 0;
+    }
+
+    .alert-success {
+        background-color: #E38348;
+    }
+    .alert-info {
+        background-color: #E38348;
+        border-color: #E38348;
+    }
 
     .main-panel-success {
         background-color: #6B2900;
     }
     .main-panel-fail {
         background-color: #6B2900;
+    }
+    .btn-primary {
+        background-color: #6B2900;
+        border-color: #E38348;
     }
 
     li { list-style-type: none; }
@@ -352,11 +372,23 @@ export default {
     .btn-operator {
         width: 40px;
     }
-    .btn-change-active {
-        border: 2px solid rgba(83, 83, 83, 0.467);
-        background-color: rgba(255, 255, 255, 0.279)
-    }
+
     .btn-change {
-        background-color: rgba(255, 255, 255, 0.4)
+        background-color: #6B2900;
     }
+    .btn-change-active i{
+        color: #6B2900 !important;
+    }
+    .btn-change i {
+        color: #E38348;
+    }
+    .btn-change-active {
+        border: 2px solid #6B2900;
+        background-color: rgba(255, 255, 255, 0.4);
+        color: #6B2900 !important;
+    }
+    .btn-link {
+        color: #E38348;
+    }
+
 </style>
