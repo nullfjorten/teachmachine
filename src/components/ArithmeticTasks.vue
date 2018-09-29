@@ -87,7 +87,7 @@
                                     <button class="btn btn-link btn-change btn-operator" :class="[operator == '*' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('*')"><i class="fa fa-times"></i></button>
                                     <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('/')"><i class="fa fa-divide"></i></button>
                                 </div>
-                                <div class="col-md-6 alert alert-warning">
+                                <div class="col-md-6 alert alert-warning" align="center">
                                     <button class="btn btn-link btn-change" :class="[difficulty == '1' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('1')">Lett / easy</button>
                                     <button class="btn btn-link btn-change" :class="[difficulty == '2' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('2')">Middels / medium</button>
                                     <button class="btn btn-link btn-change" :class="[difficulty == '3' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('3')">Vanskelig / hard</button>
@@ -216,7 +216,7 @@ export default {
         },
         setProblemDifficulty (difficulty) {
             this.difficulty = difficulty;
-            this.generateProblem();
+            //this.generateProblem();
             this.numQuestionsAsked--;
         },
         generateProblem () {
@@ -287,6 +287,7 @@ export default {
             if (this.isCorrect) {
                 this.generateProblem();
             }
+            return false;
         },
         markSuccess () {
             this.alertSuccess = true;
@@ -338,10 +339,12 @@ export default {
 
     .alert-success {
         background-color: #E38348;
+        color: #6B2900;
     }
     .alert-info {
         background-color: #E38348;
         border-color: #E38348;
+        color: #6B2900;
     }
 
     .main-panel-success {
@@ -353,6 +356,7 @@ export default {
     .btn-primary {
         background-color: #6B2900;
         border-color: #E38348;
+        margin: .2em 0;
     }
 
     li { list-style-type: none; }
@@ -375,6 +379,7 @@ export default {
 
     .btn-change {
         background-color: #6B2900;
+        margin: .2em;
     }
     .btn-change-active i{
         color: #6B2900 !important;
