@@ -15,7 +15,7 @@
 
                         <div class="row">
                             <div class="col-md-8">
-                                <input type="text" v-model="answer" ref="txtAnswer" @keypress.enter="enterPressed" class="form-control mb-3" pattern="\d*" placeholder="">
+                                <input type="text" v-model="answer" ref="txtAnswer" @keypress.enter="enterPressed" class="form-control mb-3" pattern="\d*" placeholder="Skriv svaret her">
                             </div>
                             <div class="col-md-4">
                                 <button @click.prevent="generateProblem" class="btn btn-block btn-primary">OK</button>
@@ -86,6 +86,7 @@
                                     <button class="btn btn-link btn-change btn-operator" :class="[operator == '-' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('-')"><i class="fa fa-minus"></i></button>
                                     <button class="btn btn-link btn-change btn-operator" :class="[operator == '*' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('*')"><i class="fa fa-times"></i></button>
                                     <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('/')"><i class="fa fa-divide"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' ? 'btn-change-active' : '']" @click.prevent="activateRandomProblemTypes('')"><i class="fa fa-question"></i></button>
                                 </div>
                                 <div class="col-md-6 alert alert-warning" align="center">
                                     <button class="btn btn-link btn-change" :class="[difficulty == '1' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('1')">Lett / easy</button>
@@ -197,6 +198,9 @@ export default {
             if (typeof value != 'number') { console.error("Ones(value) is not a number", value); }
             return value % 10;
         },
+        activateRandomProblemTypes() {
+            // Todo: Make this.
+        },
         setActiveProblemType(problemTypeOperator) {
             //this.focusInputField();
             for (var i = 0; i < this.problemTypes.length; i++) {
@@ -216,7 +220,7 @@ export default {
         },
         setProblemDifficulty (difficulty) {
             this.difficulty = difficulty;
-            //this.generateProblem();
+            this.generateProblem();
             this.numQuestionsAsked--;
         },
         generateProblem () {
@@ -320,42 +324,49 @@ export default {
 
 
 <style scoped>
-    .color-primary-0 { color: #AF4A0B }	/* Main Primary color */
+    .color-primary-0 { color: #AF4A0B }	
     .color-primary-1 { color: #E38348 }
     .color-primary-2 { color: #D4621C }
     .color-primary-3 { color: #913700 }
     .color-primary-4 { color: #6B2900 }
 
+    /*
+    .color1 { color: rgba(30, 56, 136, 1); }
+    .color2 { color: rgba(71, 168, 189, 1); }
+    .color3 { color: rgb(252, 227, 0); }
+    .color4 { color: rgba(255, 173, 105, 1); }
+    .color5 { color: rgba(156, 56, 72, 1); }*/
+
     .btn-operator {
         /*background-color: */
     }
     .alert-warning {
-        background-color: #E38348;
-        border-color: #913700;
+        background-color: #D4621C;
+        border-color: #6B2900;
         color: #6B2900;
         font-size: 138%;
         text-shadow: 0;
     }
 
     .alert-success {
-        background-color: #E38348;
-        color: #6B2900;
+        background-color: #D4621C;
+        color: #222;
     }
     .alert-info {
-        background-color: #E38348;
-        border-color: #E38348;
-        color: #6B2900;
+        background-color: #D4621C;
+        border-color: #555;
+        color: #222;
     }
 
-    .main-panel-success {
+    /*.main-panel-success {
         background-color: #6B2900;
     }
     .main-panel-fail {
         background-color: #6B2900;
-    }
+    }*/
     .btn-primary {
-        background-color: #6B2900;
-        border-color: #E38348;
+        background-color: rgba(30, 56, 136, 1);
+        border-color: #555;
         margin: .2em 0;
     }
 
@@ -378,22 +389,24 @@ export default {
     }
 
     .btn-change {
-        background-color: #6B2900;
+        background-color: rgba(30, 56, 136, 1);
         margin: .2em;
     }
     .btn-change-active i{
-        color: #6B2900 !important;
+        color: rgba(30, 56, 136, 1) !important;
     }
     .btn-change i {
-        color: #E38348;
+        color: #ddd;
     }
     .btn-change-active {
-        border: 2px solid #6B2900;
+        border: 2px solid #555;
         background-color: rgba(255, 255, 255, 0.4);
-        color: #6B2900 !important;
+        color: rgba(30, 56, 136, 1) !important;
+        
     }
     .btn-link {
-        color: #E38348;
+        color: #ddd;
+        font-weight: bold;
     }
 
 </style>
