@@ -82,16 +82,16 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 alert alert-warning">
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '+' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('+')"><i class="fa fa-plus"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '-' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('-')"><i class="fa fa-minus"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '*' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('*')"><i class="fa fa-times"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('/')"><i class="fa fa-divide"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' ? 'btn-change-active' : '']" @click.prevent="activateRandomProblemTypes('')"><i class="fa fa-question"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '+' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('+')"><i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '-' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('-')"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '*' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('*')"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('/')"><i class="fa fa-divide"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[randomProblemTypesActivated == true ? 'btn-change-active' : '']" @click.prevent="activateRandomProblemTypes((!randomProblemTypesActivated))"><i class="fa fa-question"></i></button>
                                 </div>
                                 <div class="col-md-6 alert alert-warning" align="center">
-                                    <button class="btn btn-link btn-change" :class="[difficulty == '1' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('1')">Lett / easy</button>
-                                    <button class="btn btn-link btn-change" :class="[difficulty == '2' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('2')">Middels / medium</button>
-                                    <button class="btn btn-link btn-change" :class="[difficulty == '3' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('3')">Vanskelig / hard</button>
+                                    <button class="btn btn-link btn-change" :class="[difficulty == '1' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('1')">Lett</button>
+                                    <button class="btn btn-link btn-change" :class="[difficulty == '2' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('2')">Middels</button>
+                                    <button class="btn btn-link btn-change" :class="[difficulty == '3' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('3')">Vanskelig</button>
                                 </div>
                             </div>
                         </div>
@@ -133,9 +133,12 @@ export default {
                 { 'operator': '+', 'heading': '+ Addisjon (pluss)' },
                 { 'operator': '-', 'heading': '- Subraksjon (minus)' },
                 { 'operator': '*', 'heading': '* Multiplikasjon (gange)' },
-                { 'operator': '/', 'heading': '/ Divisjon (dele)' }
+                { 'operator': '/', 'heading': '/ Divisjon (dele)' },
+                /*{ 'operator': '?', 'heading': '+ - * / Alle fire regnearter' }*/
             ],
             activeProblemTypeIndex: 0, // 0-4
+            randomProblemTypesActivated: false,
+            randomProblemTypeHeading: '+ - * / Tilfeldige regnearter',
             difficulty: '1', // '1'-'3'
             points: 0,
             problem: '',
@@ -161,7 +164,12 @@ export default {
         tensB ()     { return this.tens(this.b); },
         onesB ()     { return this.ones(this.b); },
         heading () {
-            return this.problemTypes[this.activeProblemTypeIndex].heading;
+            if (this.randomProblemTypesActivated) {
+                return this.randomProblemTypeHeading;
+            }
+            else {
+                return this.problemTypes[this.activeProblemTypeIndex].heading;
+            }
         },
         assessment() {
             if (this.isCorrect) {
@@ -198,11 +206,14 @@ export default {
             if (typeof value != 'number') { console.error("Ones(value) is not a number", value); }
             return value % 10;
         },
-        activateRandomProblemTypes() {
+        activateRandomProblemTypes(active = true) {
             // Todo: Make this.
+            this.randomProblemTypesActivated = active;
+            this.generateProblem();
         },
         setActiveProblemType(problemTypeOperator) {
             //this.focusInputField();
+            this.activateRandomProblemTypes(false);
             for (var i = 0; i < this.problemTypes.length; i++) {
                 if (problemTypeOperator == this.problemTypes[i].operator) {
                     if (i == this.activeProblemTypeIndex) {
@@ -224,6 +235,9 @@ export default {
             this.numQuestionsAsked--;
         },
         generateProblem () {
+            if (this.randomProblemTypesActivated) {
+                this.activeProblemTypeIndex = Math.floor(Math.random() * this.problemTypes.length);
+            }
             var operator = this.operator;
 
             //this.a = Math.random();
@@ -341,7 +355,7 @@ export default {
         /*background-color: */
     }
     .alert-warning {
-        background-color: #D4621C;
+        background-color: #E38348;
         border-color: #6B2900;
         color: #6B2900;
         font-size: 138%;
@@ -402,11 +416,13 @@ export default {
         border: 2px solid #555;
         background-color: rgba(255, 255, 255, 0.4);
         color: rgba(30, 56, 136, 1) !important;
-        
     }
     .btn-link {
         color: #ddd;
         font-weight: bold;
+    }
+    h1 {
+        font-size: 150%;
     }
 
 </style>
