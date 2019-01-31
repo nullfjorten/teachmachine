@@ -2,14 +2,21 @@
     <div>
         <div class="row">
             <div class="col-md-12 col-lg-8 offset-lg-2">
-                <div class="col-12">
+                <div class="col-12" v-show="false">
                     <h1>{{ heading }}</h1>
                 </div>
                 <div class="alert" :class="{'alert-success': alertSuccess, 'alert-info': alertInfo }">
                     <form>
+
+                        <div class="alert d-flex p-0" v-if="false">
+                            <div class="card p-2 flex-grow-1 bd-highlight">test</div>
+                            <div class="card p-2 bd-highlight">test</div>
+                            <div class="card">test</div>
+                        </div>
+
                         <div class="row">
                             <div class="col-12">
-                                <h2>{{ problem }} </h2>
+                                <h2>{{ problem }} =</h2>
                             </div>
                         </div>
 
@@ -18,7 +25,7 @@
                                 <input type="text" v-model="answer" ref="txtAnswer" @keypress.enter="enterPressed" class="form-control mb-3" pattern="\d*" placeholder="Skriv svaret her">
                             </div>
                             <div class="col-md-4">
-                                <button @click.prevent="generateProblem" class="btn btn-block btn-primary">OK</button>
+                                <button @click.prevent="generateProblem" class="btn btn-block btn-primary">Nytt problem</button>
                             </div>
                         </div>
 
@@ -77,21 +84,24 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12 alert alert-warning">
-                                    Antall riktige svar: {{ numCorrectAnswers }}
+                                    Antall riktige: {{ numCorrectAnswers }}
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 alert alert-warning">
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '+' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('+')"><i class="fa fa-plus"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '-' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('-')"><i class="fa fa-minus"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '*' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('*')"><i class="fa fa-times"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('/')"><i class="fa fa-divide"></i></button>
-                                    <button class="btn btn-link btn-change btn-operator" :class="[randomProblemTypesActivated == true ? 'btn-change-active' : '']" @click.prevent="activateRandomProblemTypes((!randomProblemTypesActivated))"><i class="fa fa-question"></i></button>
+                                <div class="col-md-6 alert alert-warning" align="center">
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '+' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('+')" title="Pluss (addisjon)"><i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '-' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('-')" title="Minus (subtraksjon)"><i class="fa fa-minus"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '*' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('*')" title="Gange (multiplikasjon)"><i class="fa fa-times"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[operator == '/' && !randomProblemTypesActivated ? 'btn-change-active' : '']" @click.prevent="setActiveProblemType('/')" title="Dele (divisjon)"><i class="fa fa-divide"></i></button>
+                                    <button class="btn btn-link btn-change btn-operator" :class="[randomProblemTypesActivated == true ? 'btn-change-active' : '']" @click.prevent="activateRandomProblemTypes((!randomProblemTypesActivated))" title="Tilfeldige regnearter"><i class="fa fa-question"></i></button>
                                 </div>
                                 <div class="col-md-6 alert alert-warning" align="center">
                                     <button class="btn btn-link btn-change" :class="[difficulty == '1' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('1')">Lett</button>
                                     <button class="btn btn-link btn-change" :class="[difficulty == '2' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('2')">Middels</button>
                                     <button class="btn btn-link btn-change" :class="[difficulty == '3' ? 'btn-change-active' : '']" @click.prevent="setProblemDifficulty('3')">Vanskelig</button>
+                                </div>
+                                <div class="col-md-6 alert alert-warning" align="center">
+                                    <button class="btn btn-link btn-change" :class="[tensChallengeActive == '1' ? 'btn-change-active' : '']" @click.prevent="toggleTensChallenge(true)" title="Tiervenner">10</button>
                                 </div>
                             </div>
                         </div>
@@ -105,14 +115,15 @@
                 Answer: {{ correctAnswer }}
             </div>
             <div class="col-lg-12 text-center" v-show="true">
-                <div>Skann denne QR-koden med mobilen for å få lenken til nettstedet.</div>
+                <div>Skann denne QR-koden med mobilen for å få lenken til nettstedet:</div>
                 <div>
                     <a href="https://teachmachine014.firebaseapp.com">
                         <img src="../assets/qr-link.png" alt="QR-kode, link til siden">
                     </a>
                 </div>
                 <div>
-                    <a href="https://github.com/nullfjorten/teachmachine" target="_blank">Klikk her for prosjektets kildekode.</a>
+                    <br>
+                    <a href="https://github.com/nullfjorten/teachmachine" target="_blank">Eller klikk her for prosjektets kildekode.</a>
                 </div>
             </div>
         </div>
@@ -151,6 +162,9 @@ export default {
             alertSuccess: false, // TODO: Fiks bedre navn/logikk på CSS-klassesetting. Computed properties?
             alertInfo: true,
             booAnswered: false,
+            tensChallengeActive: false,
+            previousA: null,
+            previousB: null,
         }
     },
     computed: {
@@ -234,7 +248,18 @@ export default {
             this.generateProblem();
             this.numQuestionsAsked--;
         },
+        toggleTensChallenge () {
+            this.tensChallengeActive = !this.tensChallengeActive;
+            this.generateProblem();
+        },
+        setTensChallenge (active = true) {
+            this.tensChallengeActive = active;
+        },
         generateProblem () {
+            // Store data from previous problem (setRandomIntAB uses this to avoid repeats of the same problem)
+            this.previousA = this.a;
+            this.previousB = this.b;
+
             if (this.randomProblemTypesActivated) {
                 this.activeProblemTypeIndex = Math.floor(Math.random() * this.problemTypes.length);
             }
@@ -245,39 +270,72 @@ export default {
 
             switch (operator) {
                 case '+': 
-                    switch (this.difficulty) {
-                        case '1': this.setRandomIntAB([0, 10]); break;
-                        case '2': this.setRandomIntAB([3, 100], [7, 25]); break;
-                        case '3': this.setRandomIntAB([11, 300]); break;
-                        default:
-                            console.error('Invalid addition difficulty', this.difficulty);
+                    if (this.tensChallengeActive) {
+                        switch (this.difficulty) {
+                            case '1': this.setRandomIntAB([0, 10]); break;
+                            case '2': this.setRandomIntAB([1, 100]); break;
+                            case '3': this.setRandomIntAB([1, 1000]); break;
+                            default:
+                                console.error('Invalid addition difficulty', this.difficulty);
+                        }
+                    } else {
+                        switch (this.difficulty) {
+                            case '1': this.setRandomIntAB([0, 10]); break;
+                            case '2': this.setRandomIntAB([19, 100]); break;
+                            case '3': this.setRandomIntAB([19, 1000]); break;
+                            default:
+                                console.error('Invalid addition difficulty', this.difficulty);
+                        }
                     }
                     break;
                 case '-': 
-                    switch (this.difficulty) {
-                        case '1': this.setRandomIntAB([0, 10]); break;
-                        case '2': this.setRandomIntAB([3, 100], [7, 25]); break;
-                        case '3': this.setRandomIntAB([0, 100]); break;
+                    if (this.tensChallengeActive) {
+                        switch (this.difficulty) {
+                            case '1': this.setRandomIntAB([0, 10]); break;
+                            case '2': this.setRandomIntAB([1, 100]); break;
+                            case '3': this.setRandomIntAB([1, 1000]); break;
 
-                        default:
-                            console.error('Invalid subtraction difficulty', this.difficulty);
-                    }
-                    if (this.b > this.a) { // Swap A/B to avoid negative answers
-                        var tmp = this.a;
-                        this.a = this.b;
-                        this.b = tmp;
+                            default:
+                                console.error('Invalid subtraction difficulty', this.difficulty);
+                        }
+                    } else {
+                        switch (this.difficulty) {
+                            case '1': this.setRandomIntAB([0, 10]); break;
+                            case '2': this.setRandomIntAB([1, 100]); break;
+                            case '3': this.setRandomIntAB([1, 1000]); break;
+
+                            default:
+                                console.error('Invalid subtraction difficulty', this.difficulty);
+                        }
+                        if (this.b > this.a) { // Swap A/B to avoid negative answers
+                            var tmp = this.a;
+                            this.a = this.b;
+                            this.b = tmp;
+                        }
                     }
                     break;
                 case '*': 
-                    switch (this.difficulty) {                
-                        case '1': this.setRandomIntAB([0, 10]); break;
-                        case '2': this.setRandomIntAB([0, 100], [0, 9]); break;
-                        case '3': this.setRandomIntAB([0, 100]); break;
+                    if (this.tensChallengeActive) {
+                        switch (this.difficulty) {
+                            case '1': this.setRandomIntAB([0, 10]); break;
+                            case '2': this.setRandomIntAB([0, 1000]); break;
+                            case '3': this.setRandomIntAB([0, 10000]); break;
 
-                        default:
-                            console.error('Invalid multiplication difficulty', this.difficulty);
+                            default:
+                                console.error('Invalid multiplication difficulty', this.difficulty);
+                        }
+                        break;
+                    } else {
+                        switch (this.difficulty) {
+                            case '1': this.setRandomIntAB([0, 10]); break;
+                            case '2': this.setRandomIntAB([0, 100], [0, 9]); break;
+                            case '3': this.setRandomIntAB([0, 1000]); break;
+
+                            default:
+                                console.error('Invalid multiplication difficulty', this.difficulty);
+                        }
+                        break;
                     }
-                    break;
                 case '/': 
                     switch (this.difficulty) {                
                         case '1': this.setRandomIntAB([0, 10], [1, 10]); break;
@@ -329,8 +387,23 @@ export default {
                 arrMinMaxB = arrMinMaxA;
             }
 
-            this.a = this.getRandomInt(arrMinMaxA[0], arrMinMaxA[1]);
+            if (this.tensChallengeActive && this.operator != '/') { // Ugh... ugly hack!
+                switch (this.difficulty) {
+                    case '1': this.a = 10; break;
+                    case '2': this.a = 100; break;
+                    case '3': this.a = 1000; break;
+                    default: console.error('Invalid addition difficulty', this.difficulty);
+                }
+            } else {
+                this.a = this.getRandomInt(arrMinMaxA[0], arrMinMaxA[1]);
+            }
+
             this.b = this.getRandomInt(arrMinMaxB[0], arrMinMaxB[1]);
+
+            // Avoid repeats of the same problem twice in a row
+            if (this.a == this.previousA && this.b == this.previousB) {
+                this.setRandomIntAB(arrMinMaxA, arrMinMaxB);
+            }
         },
     }
 }
@@ -356,18 +429,22 @@ export default {
     }
     .alert-warning {
         background-color: #E38348;
-        border-color: #6B2900;
+        border-color: #6B290022;
         color: #6B2900;
         font-size: 138%;
         text-shadow: 0;
     }
 
     .alert-success {
-        background-color: #D4621C;
+        background: rgb(107,41,0);
+        background: linear-gradient(352deg, #913700, #D4621C);
+        /*background-color: #d4621c;*/
         color: #222;
     }
     .alert-info {
-        background-color: #D4621C;
+        background: rgb(107,41,0);
+        background: linear-gradient(352deg, #913700, #D4621C);
+        /*background-color: #D4621C;*/
         border-color: #555;
         color: #222;
     }
